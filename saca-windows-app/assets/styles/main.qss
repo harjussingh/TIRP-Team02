@@ -1,0 +1,376 @@
+QWidget {
+    background-color: #F5F0EB;
+    color: #2D1810;
+    font-family: "Atkinson Hyperlegible", Arial, sans-serif;
+    font-size: 18px;
+}
+
+/* ---------- Main cards ---------- */
+
+#mainSimpleCard,
+#contentCard,
+#questionCard,
+#actionCard {
+    background-color: #FFFFFF;
+    border: 2px solid #E3D8CC;
+    border-radius: 24px;
+}
+
+#actionCard {
+    background-color: #FFFDFB;
+    border: 2px solid #E7D6C7;
+}
+
+/* ---------- Titles ---------- */
+
+#pageTitle {
+    font-size: 48px;
+    font-weight: 800;
+    color: #2D1810;
+}
+
+#mainTitle {
+    font-size: 42px;
+    font-weight: 800;
+    color: #2D1810;
+}
+
+#mainSubtitle {
+    font-size: 24px;
+    font-weight: 700;
+    color: #0052A3;
+}
+
+#cardTitle {
+    font-size: 28px;
+    font-weight: 800;
+    color: #2D1810;
+}
+
+#fieldLabel {
+    font-size: 24px;
+    font-weight: 800;
+    color: #2D1810;
+}
+
+#cardBody {
+    color: #4A3A32;
+    font-size: 18px;
+    line-height: 1.4;
+}
+
+#micIcon {
+    font-size: 90px;
+    qproperty-alignment: AlignCenter;
+}
+
+/* ---------- Inputs ---------- */
+
+QTextEdit,
+QComboBox {
+    background-color: #FFFEFC;
+    border: 2px solid #DCCFC2;
+    border-radius: 18px;
+    padding: 14px 16px;
+    font-size: 20px;
+    color: #2D1810;
+}
+
+QTextEdit:focus,
+QComboBox:focus {
+    border: 2px solid #0052A3;
+}
+
+QComboBox {
+    min-height: 50px;
+    padding-right: 30px;
+}
+
+QComboBox::drop-down {
+    border: none;
+    width: 28px;
+}
+
+QComboBox::down-arrow {
+    width: 12px;
+    height: 12px;
+}
+
+/* ---------- Generic buttons ---------- */
+
+QPushButton {
+    border: none;
+    border-radius: 18px;
+    padding: 14px 20px;
+    font-size: 22px;
+    font-weight: 700;
+    min-height: 48px;
+}
+
+QPushButton:disabled {
+    background-color: #DDD6CE;
+    color: #8B8178;
+}
+
+/* ---------- Big hero buttons ---------- */
+
+#bigPrimaryButton {
+    background-color: #0052A3;
+    color: white;
+    border-radius: 24px;
+    font-size: 28px;
+    font-weight: 800;
+    padding: 22px 28px;
+}
+
+#bigPrimaryButton:hover {
+    background-color: #00468C;
+}
+
+#bigPrimaryButton:pressed {
+    background-color: #003B76;
+}
+
+#bigSecondaryButton {
+    background-color: white;
+    color: #2D1810;
+    border: 3px solid #D8CBBE;
+    border-radius: 24px;
+    font-size: 28px;
+    font-weight: 800;
+    padding: 22px 28px;
+}
+
+#bigSecondaryButton:hover {
+    background-color: #FAF6F1;
+    border: 3px solid #C6B7A8;
+}
+
+#bigSecondaryButton:pressed {
+    background-color: #F2E9E1;
+}
+
+/* ---------- Standard buttons ---------- */
+
+#primaryButton {
+    background-color: #0052A3;
+    color: white;
+    border-radius: 18px;
+    font-size: 22px;
+    font-weight: 800;
+    padding: 14px 22px;
+}
+
+#primaryButton:hover {
+    background-color: #00468C;
+}
+
+#primaryButton:pressed {
+    background-color: #003B76;
+}
+
+#secondaryButton {
+    background-color: white;
+    color: #2D1810;
+    border: 2px solid #CFC4B8;
+    border-radius: 18px;
+    font-size: 22px;
+    font-weight: 700;
+    padding: 14px 22px;
+}
+
+#secondaryButton:hover {
+    background-color: #FAF6F1;
+    border: 2px solid #BDAF9F;
+}
+
+#secondaryButton:pressed {
+    background-color: #F1E9E1;
+}
+
+/* ---------- Emergency ---------- */
+
+#emergencyButton {
+    background-color: #B10000;
+    color: white;
+    border-radius: 24px;
+    font-size: 28px;
+    font-weight: 800;
+    padding: 22px 28px;
+}
+
+#emergencyButton:hover {
+    background-color: #970000;
+}
+
+#emergencyButton:pressed {
+    background-color: #7F0000;
+}
+
+#emergencyCard {
+    background-color: #FFF2F2;
+    border: 3px solid #B10000;
+    border-radius: 28px;
+}
+
+#emergencyTitle {
+    font-size: 44px;
+    font-weight: 900;
+    color: #B10000;
+}
+
+#emergencyBody {
+    font-size: 24px;
+    font-weight: 700;
+    color: #5A1F1F;
+    line-height: 1.45;
+}
+
+/* ---------- Option buttons / chips ---------- */
+
+#optionButton {
+    background-color: white;
+    color: #2D1810;
+    border: 2px solid #D7CCC0;
+    border-radius: 20px;
+    font-size: 22px;
+    font-weight: 700;
+    padding: 16px 18px;
+}
+
+#optionButton:hover {
+    background-color: #F8F5F1;
+    border: 2px solid #0052A3;
+}
+
+#optionButton:checked {
+    background-color: #0052A3;
+    color: white;
+    border: 2px solid #0052A3;
+}
+
+#symptomChip {
+    background-color: #E9F1FA;
+    color: #0052A3;
+    border-radius: 16px;
+    padding: 10px 16px;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+/* ---------- Pain scale ---------- */
+
+#painScaleImage {
+    background-color: #FFFEFC;
+    border: 2px dashed #D7CCC0;
+    border-radius: 18px;
+    color: #6D5D52;
+    font-size: 24px;
+    font-weight: 700;
+    padding: 20px;
+}
+
+#scaleValueLabel {
+    background-color: #0052A3;
+    color: white;
+    border-radius: 16px;
+    font-size: 20px;
+    font-weight: 800;
+    padding: 10px 16px;
+}
+
+/* ---------- Progress ---------- */
+
+QProgressBar {
+    background-color: #EAE1D7;
+    border: none;
+    border-radius: 8px;
+    min-height: 16px;
+}
+
+QProgressBar::chunk {
+    background-color: #0052A3;
+    border-radius: 8px;
+}
+
+/* ---------- Disease cards ---------- */
+
+#diseaseCard {
+    background-color: #FFFFFF;
+    border: 2px solid #E3D8CC;
+    border-radius: 20px;
+}
+
+#imageBox {
+    background-color: #F8F3EE;
+    border: 2px dashed #D6C9BC;
+    border-radius: 14px;
+    color: #6D5D52;
+    font-weight: 700;
+}
+
+#diseaseTitle {
+    font-size: 22px;
+    font-weight: 800;
+    color: #2D1810;
+}
+
+#diseaseMeta {
+    color: #5A4A40;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+#diseaseDescription {
+    color: #4A3A32;
+    font-size: 17px;
+    line-height: 1.4;
+}
+
+/* ---------- Results ---------- */
+
+#resultLevel {
+    font-size: 32px;
+    font-weight: 900;
+    color: #2D1810;
+}
+
+#resultAdvice {
+    font-size: 24px;
+    font-weight: 800;
+    color: #0052A3;
+    line-height: 1.4;
+}
+
+/* ---------- Scroll areas ---------- */
+
+QScrollArea {
+    background: transparent;
+    border: none;
+}
+
+QScrollBar:vertical {
+    width: 12px;
+    background: transparent;
+    margin: 4px;
+}
+
+QScrollBar::handle:vertical {
+    background: #CBBEB0;
+    border-radius: 6px;
+    min-height: 40px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #B7A797;
+}
+
+QScrollBar::add-line:vertical,
+QScrollBar::sub-line:vertical {
+    height: 0px;
+}
+
+QScrollBar::add-page:vertical,
+QScrollBar::sub-page:vertical {
+    background: transparent;
+}
