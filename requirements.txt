@@ -1,0 +1,18 @@
+# Core dependencies (existing)
+# Add your existing dependencies here if any
+
+# Voice Recognition (Whisper)
+openai-whisper==20231117
+torch>=2.0.0
+torchaudio>=2.0.0
+
+# Audio Processing
+pydub>=0.25.1
+soundfile>=0.12.1
+numpy>=1.24.0
+
+# Additional utilities
+librosa>=0.10.0
+
+# GUI and Audio Recording
+pyaudio>=0.2.13

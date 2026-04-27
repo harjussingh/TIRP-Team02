@@ -1,0 +1,37 @@
+# Old nested repo copy — not part of this project
+Adaptive-Clinical-Assistant/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
+
+# Large model cache (downloaded on first run — too big for git)
+# HuggingFace cache
+~/.cache/huggingface/
+.cache/
+
+# Trained model weights — kept locally, teammates run train-on-first-use
+models/bilstm_negation.pt
+models/bilstm_vocab.json
+
+# Audio files
+*.wav
+*.mp3
+*.ogg
+*.flac
+
+# Logs
+*.log
