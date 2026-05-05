@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.saca.ui.screens.InputModeSelectScreen
 import com.example.saca.ui.screens.LanguageSelectScreen
+import com.example.saca.ui.screens.SymptomInputScreen
 import com.example.saca.viewmodel.TriageViewModel
 
 @Composable
@@ -28,6 +29,12 @@ fun AppNavGraph(navController: NavHostController) {
             InputModeSelectScreen(viewModel = viewModel, onModeSelected = {
                 navController.navigate(Screen.SymptomInput.route)
             }, onBack = { navController.popBackStack() })
+        }
+        composable(Screen.SymptomInput.route) {
+            SymptomInputScreen(
+                viewModel = viewModel,
+                onNext = { navController.navigate(Screen.FollowUp.route) },
+                onBack = { navController.popBackStack() })
         }
     }
 }
