@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.AndroidResources
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -37,6 +39,9 @@ android {
     buildFeatures {
         compose = true
     }
+    androidResources {
+        noCompress += "tflite"
+    }
 }
 
 dependencies {
@@ -58,4 +63,9 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+    // LiteRT via Google Play Services — recommended, no namespace conflict
+    implementation("com.google.android.gms:play-services-tflite-java:16.4.0")
+    implementation("com.google.android.gms:play-services-tflite-support:16.4.0")
+    implementation(libs.play.services.tflite.java)
+    implementation(libs.play.services.tflite.support)
 }

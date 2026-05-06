@@ -1,16 +1,23 @@
 package com.example.saca.viewmodel
 
-import androidx.lifecycle.ViewModel
-import com.example.saca.model.InputMode
-import com.example.saca.model.Language
-import com.example.saca.model.Symptom
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import com.example.saca.ml.TFLiteInferenceEngine
+import com.example.saca.model.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class TriageViewModel : ViewModel() {
+// AndroidViewModel gives us Application context for TFLite asset loading
+class TriageViewModel(application: Application) : AndroidViewModel(application) {
 
-    // StateFlow — Compose observes this and recomposes when value changes
+    private val inferenceEngine = TFLiteInferenceEngine(application)
+
+    init {
+        // Load model + vocab once when ViewModel is created
+        inferenceEngine.initialise()
+    }
+
     private val _language = MutableStateFlow(Language.ENGLISH)
     val language: StateFlow<Language> = _language.asStateFlow()
 
@@ -29,13 +36,15 @@ class TriageViewModel : ViewModel() {
     private val _typedInput = MutableStateFlow("")
     val typedInput: StateFlow<String> = _typedInput.asStateFlow()
 
-    fun setLanguage(lang: Language) {
-        _language.value = lang
-    }
+    // Inference result — null until model has run
+    private val _inferenceResult = MutableStateFlow<ModelInferenceResult?>(null)
+    val inferenceResult: StateFlow<ModelInferenceResult?> = _inferenceResult.asStateFlow()
 
-    fun setInputMode(mode: InputMode) {
-        _inputMode.value = mode
-    }
+    fun setLanguage(lang: Language) { _language.value = lang }
+    fun setInputMode(mode: InputMode) { _inputMode.value = mode }
+    fun setSpeechTranscript(text: String) { _speechTranscript.value = text }
+    fun setTypedInput(text: String) { _typedInput.value = text }
+    fun switchToSpeech() { _inputMode.value = InputMode.SPEAK }
 
     fun toggleSymptom(symptom: Symptom) {
         _selectedSymptoms.value = _selectedSymptoms.value.toMutableSet().apply {
@@ -43,16 +52,21 @@ class TriageViewModel : ViewModel() {
         }
     }
 
-    fun setSpeechTranscript(text: String) {
-        _speechTranscript.value = text
+    // Called when user taps Next on any input screen
+    // Runs inference and stores result for the result screen
+    fun runInference() {
+        val text = when (_inputMode.value) {
+            InputMode.TYPE    -> _typedInput.value
+            InputMode.SPEAK   -> _speechTranscript.value
+            InputMode.PICTURES -> _selectedSymptoms.value
+                .joinToString(" ") { it.labelEN }
+            null -> return
+        }
+        _inferenceResult.value = inferenceEngine.runInference(text)
     }
 
-    fun setTypedInput(text: String) {
-        _typedInput.value = text
-    }
-
-    // Switch from text → speech mode mid-screen
-    fun switchToSpeech() {
-        _inputMode.value = InputMode.SPEAK
+    override fun onCleared() {
+        super.onCleared()
+        inferenceEngine.close()
     }
 }
