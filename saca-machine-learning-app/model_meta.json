@@ -1,0 +1,19 @@
+{
+  "output_order": [
+    "confidence",
+    "needs_follow_up",
+    "severity",
+    "suggested_symptoms"
+  ],
+  "severity_order": [
+    "MILD",
+    "MODERATE",
+    "NEEDS_REST"
+  ],
+  "input_shape": [
+    1,
+    234
+  ],
+  "vocab_first_token": "None",
+  "note": "Show suggested_symptoms only when needs_follow_up >= 0.5"
+}
