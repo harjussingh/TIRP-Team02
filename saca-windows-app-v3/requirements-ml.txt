@@ -1,0 +1,3 @@
+# ML support for SACA TFLite severity model
+numpy>=1.23
+tensorflow>=2.15

@@ -1,0 +1,4 @@
+# Optional research/advanced NLP components from teammate module.
+# The app runs without these because it has safe fallbacks.
+transformers>=4.36.0
+sentencepiece>=0.1.99
