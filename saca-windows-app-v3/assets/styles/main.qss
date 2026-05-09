@@ -1,0 +1,1369 @@
+QWidget {
+    color: #1C1C1C;
+    font-family: "Atkinson Hyperlegible", Arial, sans-serif;
+    font-size: 18px;
+}
+
+/* ---------- Cards ---------- */
+
+#mainSimpleCard,
+#contentCard,
+#questionCard,
+#actionCard,
+#resultCard,
+#infoCard,
+#severityCard,
+#languageCard {
+    background-color: #FFFFFF;
+    border: 2px solid #E3D8CC;
+    border-radius: 24px;
+}
+
+#actionCard {
+    background-color: #FFFDFB;
+}
+
+#severityCard {
+    border-width: 3px;
+}
+
+/* ---------- Titles ---------- */
+
+#brandTitle {
+    font-size: 64px;
+    font-weight: 900;
+    color: #0052A3;
+}
+
+#pageTitle {
+    font-size: 44px;
+    font-weight: 800;
+    color: #2D1810;
+}
+
+#mainTitle {
+    font-size: 38px;
+    font-weight: 800;
+    color: #2D1810;
+}
+
+#mainSubtitle {
+    font-size: 24px;
+    font-weight: 700;
+    color: #8B4513;
+}
+
+#cardTitle {
+    font-size: 28px;
+    font-weight: 800;
+    color: #2D1810;
+}
+
+#fieldLabel {
+    font-size: 22px;
+    font-weight: 800;
+    color: #2D1810;
+}
+
+#cardBody {
+    color: #4A3A32;
+    font-size: 18px;
+    line-height: 1.4;
+}
+
+#mutedText {
+    color: #6B6B6B;
+    font-size: 18px;
+}
+
+#micIcon {
+    font-size: 84px;
+    qproperty-alignment: AlignCenter;
+}
+
+/* ---------- Inputs ---------- */
+
+QTextEdit,
+QComboBox {
+    background-color: #FFFFFF;
+    border: 2px solid #E3D8CC;
+    border-radius: 18px;
+    padding: 14px 16px;
+    font-size: 20px;
+    color: #2D1810;
+}
+
+QTextEdit:focus,
+QComboBox:focus {
+    border: 2px solid #0052A3;
+}
+
+QComboBox {
+    min-height: 52px;
+    padding-right: 30px;
+}
+
+QComboBox::drop-down {
+    border: none;
+    width: 28px;
+}
+
+QComboBox::down-arrow {
+    width: 12px;
+    height: 12px;
+}
+
+/* ---------- Generic buttons ---------- */
+
+QPushButton {
+    border: none;
+    border-radius: 18px;
+    padding: 14px 20px;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+QPushButton:disabled {
+    background-color: #DDD6CE;
+    color: #8B8178;
+}
+
+/* ---------- Language buttons ---------- */
+
+#languageButton {
+    background-color: #FFFFFF;
+    color: #2D1810;
+    border: 4px solid #2D1810;
+    border-radius: 26px;
+    font-size: 34px;
+    font-weight: 800;
+    padding: 22px 28px;
+    min-height: 96px;
+}
+
+#languageButton:hover {
+    background-color: #FAF6F1;
+}
+
+#languageButton:checked {
+    background-color: #0052A3;
+    color: #FFFFFF;
+    border: 4px solid #0052A3;
+}
+
+/* ---------- Hero buttons ---------- */
+
+#bigPrimaryButton {
+    background-color: #0052A3;
+    color: white;
+    border-radius: 24px;
+    font-size: 28px;
+    font-weight: 800;
+    padding: 22px 28px;
+    min-height: 84px;
+}
+
+#bigPrimaryButton:hover {
+    background-color: #00468C;
+}
+
+#bigPrimaryButton:pressed {
+    background-color: #003B76;
+}
+
+#bigSecondaryButton {
+    background-color: white;
+    color: #2D1810;
+    border: 3px solid #D8CBBE;
+    border-radius: 24px;
+    font-size: 28px;
+    font-weight: 800;
+    padding: 22px 28px;
+    min-height: 84px;
+}
+
+#bigSecondaryButton:hover {
+    background-color: #FAF6F1;
+    border: 3px solid #CDBEAF;
+}
+
+#bigSecondaryButton:pressed {
+    background-color: #F1E9E1;
+}
+
+/* ---------- Standard buttons ---------- */
+
+#primaryButton {
+    background-color: #0052A3;
+    color: white;
+    border-radius: 18px;
+    font-size: 22px;
+    font-weight: 800;
+    padding: 14px 22px;
+}
+
+#primaryButton:hover {
+    background-color: #00468C;
+}
+
+#primaryButton:pressed {
+    background-color: #003B76;
+}
+
+#secondaryButton {
+    background-color: white;
+    color: #2D1810;
+    border: 2px solid #CFC4B8;
+    border-radius: 18px;
+    font-size: 22px;
+    font-weight: 700;
+    padding: 14px 22px;
+}
+
+#secondaryButton:hover {
+    background-color: #FAF6F1;
+    border: 2px solid #BDAF9F;
+}
+
+#secondaryButton:pressed {
+    background-color: #F1E9E1;
+}
+
+/* ---------- Emergency ---------- */
+
+#emergencyButton {
+    background-color: #B10000;
+    color: white;
+    border-radius: 24px;
+    font-size: 28px;
+    font-weight: 800;
+    padding: 22px 28px;
+    min-height: 84px;
+}
+
+#emergencyButton:hover {
+    background-color: #970000;
+}
+
+#emergencyButton:pressed {
+    background-color: #7F0000;
+}
+
+#emergencyCard {
+    background-color: #FFF2F2;
+    border: 3px solid #B10000;
+    border-radius: 28px;
+}
+
+#emergencyTitle {
+    font-size: 40px;
+    font-weight: 900;
+    color: #B10000;
+}
+
+#emergencyBody {
+    font-size: 24px;
+    font-weight: 700;
+    color: #5A1F1F;
+    line-height: 1.45;
+}
+
+#emergencyListItem {
+    background-color: #FEE2E2;
+    border-radius: 18px;
+    padding: 16px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #2D1810;
+}
+
+/* ---------- Options ---------- */
+
+#optionButton {
+    background-color: white;
+    color: #2D1810;
+    border: 2px solid #DDD6CE;
+    border-radius: 20px;
+    font-size: 22px;
+    font-weight: 700;
+    padding: 16px 18px;
+}
+
+#optionButton:hover {
+    background-color: #F8F5F1;
+    border: 2px solid #0052A3;
+}
+
+#optionButton:checked {
+    background-color: #0052A3;
+    color: white;
+    border: 2px solid #0052A3;
+}
+
+#symptomChip {
+    background-color: #EEF4FB;
+    color: #0052A3;
+    border-radius: 16px;
+    padding: 10px 16px;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+/* ---------- Pain scale ---------- */
+
+#painScaleImage {
+    background-color: #FFFEFC;
+    border: 2px dashed #D7CEC4;
+    border-radius: 18px;
+    color: #7A7068;
+    font-size: 24px;
+    font-weight: 700;
+    padding: 20px;
+}
+
+#scaleValueLabel {
+    background-color: #0052A3;
+    color: white;
+    border-radius: 16px;
+    font-size: 20px;
+    font-weight: 800;
+    padding: 10px 16px;
+}
+
+/* ---------- Progress ---------- */
+
+QProgressBar {
+    background-color: #EDE7DF;
+    border: none;
+    border-radius: 8px;
+    min-height: 16px;
+}
+
+QProgressBar::chunk {
+    background-color: #0052A3;
+    border-radius: 8px;
+}
+
+/* ---------- Results ---------- */
+
+#resultLevel {
+    font-size: 34px;
+    font-weight: 900;
+    color: #2D1810;
+}
+
+#resultAdvice {
+    font-size: 24px;
+    font-weight: 800;
+    color: #0052A3;
+    line-height: 1.4;
+}
+
+#severityLow {
+    background-color: #E9F4FB;
+    border: 3px solid #0072B2;
+    border-radius: 28px;
+}
+
+#severityMedium {
+    background-color: #FFF6DE;
+    border: 3px solid #E69F00;
+    border-radius: 28px;
+}
+
+#severityHigh {
+    background-color: #FFF0E5;
+    border: 3px solid #D55E00;
+    border-radius: 28px;
+}
+
+#severityCritical {
+    background-color: #FFE7E7;
+    border: 3px solid #B10000;
+    border-radius: 28px;
+}
+
+#severityTitleLow {
+    color: #0072B2;
+    font-size: 38px;
+    font-weight: 900;
+}
+
+#severityTitleMedium {
+    color: #8C6400;
+    font-size: 38px;
+    font-weight: 900;
+}
+
+#severityTitleHigh {
+    color: #A64500;
+    font-size: 38px;
+    font-weight: 900;
+}
+
+#severityTitleCritical {
+    color: #8B1818;
+    font-size: 38px;
+    font-weight: 900;
+}
+
+#severityBodyLow {
+    color: #155B7A;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+#severityBodyMedium {
+    color: #6F5600;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+#severityBodyHigh {
+    color: #8A3B00;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+#severityBodyCritical {
+    color: #6E1414;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+#severityPickerButton {
+    background-color: #FFFFFF;
+    color: #6B6B6B;
+    border: 3px solid #E5E0D8;
+    border-radius: 999px;
+    font-size: 20px;
+    font-weight: 800;
+    padding: 16px 18px;
+    min-height: 70px;
+}
+
+#severityPickerButton:hover {
+    background-color: #FAF6F1;
+}
+
+#severityPickerButtonLow:checked {
+    background-color: #E9F4FB;
+    color: #0072B2;
+    border: 3px solid #0072B2;
+}
+
+#severityPickerButtonMedium:checked {
+    background-color: #FFF6DE;
+    color: #8C6400;
+    border: 3px solid #E69F00;
+}
+
+#severityPickerButtonHigh:checked {
+    background-color: #FFF0E5;
+    color: #A64500;
+    border: 3px solid #D55E00;
+}
+
+#severityPickerButtonCritical:checked {
+    background-color: #FFE7E7;
+    color: #8B1818;
+    border: 3px solid #B10000;
+}
+
+#conditionCard {
+    background-color: #FFFFFF;
+    border: 2px solid #E3D8CC;
+    border-radius: 20px;
+}
+
+#conditionTitle {
+    font-size: 22px;
+    font-weight: 800;
+    color: #2D1810;
+}
+
+#conditionMeta {
+    color: #6B6B6B;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+#conditionWhy {
+    color: #4E4E4E;
+    font-size: 17px;
+    line-height: 1.4;
+}
+
+/* ---------- Scroll ---------- */
+
+QScrollArea {
+    background: transparent;
+    border: none;
+}
+
+QScrollBar:vertical {
+    width: 12px;
+    background: transparent;
+    margin: 4px;
+}
+
+QScrollBar::handle:vertical {
+    background: #D3CAC0;
+    border-radius: 6px;
+    min-height: 40px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #BFB4A9;
+}
+
+QScrollBar::add-line:vertical,
+QScrollBar::sub-line:vertical {
+    height: 0px;
+}
+
+QScrollBar::add-page:vertical,
+QScrollBar::sub-page:vertical {
+    background: transparent;
+}
+/* =========================================================
+   FIGMA-STYLE RESULTS PAGE
+   ========================================================= */
+
+#resultHeroCardMild {
+    background-color: #DDE9DE;
+    border: none;
+    border-radius: 32px;
+}
+
+#resultHeroCardModerate {
+    background-color: #F7EED7;
+    border: none;
+    border-radius: 32px;
+}
+
+#resultHeroCardCritical {
+    background-color: #F8DEDB;
+    border: none;
+    border-radius: 32px;
+}
+
+#resultHeroTitleMild {
+    color: #2F5E3B;
+    font-size: 42px;
+    font-weight: 900;
+}
+
+#resultHeroTitleModerate {
+    color: #8B5E00;
+    font-size: 42px;
+    font-weight: 900;
+}
+
+#resultHeroTitleCritical {
+    color: #B10000;
+    font-size: 42px;
+    font-weight: 900;
+}
+
+#resultHeroAdviceMild {
+    color: #2F5E3B;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+#resultHeroAdviceModerate {
+    color: #8B5E00;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+#resultHeroAdviceCritical {
+    color: #B10000;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+#resultTryLabel {
+    color: #9AA0AF;
+    font-size: 22px;
+    font-weight: 900;
+}
+
+#resultPrimaryAction {
+    background-color: #0052A3;
+    color: white;
+    border: none;
+    border-radius: 18px;
+    font-size: 26px;
+    font-weight: 900;
+    padding: 18px 24px;
+}
+
+#resultPrimaryAction:hover {
+    background-color: #00468C;
+}
+
+#resultSecondaryAction {
+    background-color: white;
+    color: #0052A3;
+    border: 4px solid #0052A3;
+    border-radius: 18px;
+    font-size: 26px;
+    font-weight: 900;
+    padding: 18px 24px;
+}
+
+#resultSecondaryAction:hover {
+    background-color: #EEF4FB;
+}
+/* =========================================================
+   FIGMA-STYLE HOME / INPUT MODE SCREEN
+   ========================================================= */
+
+QLabel {
+    background: transparent;
+}
+
+#backLinkButton {
+    background: transparent;
+    border: none;
+    color: #6B6B6B;
+    font-size: 18px;
+    font-weight: 900;
+    padding: 4px 0px;
+    text-align: left;
+}
+
+#backLinkButton:hover {
+    color: #2D1810;
+}
+
+#brandTitle {
+    font-size: 76px;
+    font-weight: 900;
+    color: #0052A3;
+    background: transparent;
+}
+
+#pageTitle {
+    font-size: 42px;
+    font-weight: 900;
+    color: #2D1810;
+    background: transparent;
+}
+
+#mainSubtitle {
+    font-size: 34px;
+    font-weight: 900;
+    color: #8B6A3D;
+    background: transparent;
+}
+
+#mutedText {
+    font-size: 20px;
+    font-weight: 700;
+    color: #6B6B6B;
+    background: transparent;
+}
+
+/* ---------- Language screen ---------- */
+
+#languageButton {
+    background-color: #FFFFFF;
+    color: #2D1810;
+    border: 4px solid #2D1810;
+    border-radius: 26px;
+    font-size: 42px;
+    font-weight: 900;
+    padding: 22px 34px;
+    min-height: 120px;
+}
+
+#languageButton:hover {
+    background-color: #F8F4EF;
+}
+
+#languageButton:checked {
+    background-color: #0052A3;
+    color: #FFFFFF;
+    border: 4px solid #0052A3;
+}
+
+/* ---------- Input mode cards ---------- */
+
+#modeCard {
+    background-color: #FFFFFF;
+    border: 2px solid #E3D8CC;
+    border-radius: 18px;
+}
+
+#modeCard[hovered="true"] {
+    background-color: #FFFFFF;
+    border: 2px solid #CFC3B8;
+}
+
+#modeCardTitle {
+    background: transparent;
+    color: #2D1810;
+    font-size: 25px;
+    font-weight: 900;
+}
+
+#modeCardSubtitle {
+    background: transparent;
+    color: #6B6B6B;
+    font-size: 16px;
+    font-weight: 900;
+}
+
+#modeCardArrow {
+    background: transparent;
+    color: #6B6B6B;
+    font-size: 38px;
+    font-weight: 900;
+}
+
+#speakIconBox {
+    background-color: #A8D5B8;
+    border-radius: 16px;
+}
+
+#pictureIconBox {
+    background-color: #A9C8E8;
+    border-radius: 16px;
+}
+
+#typeIconBox {
+    background-color: #F1D38F;
+    border-radius: 16px;
+}
+
+/* ---------- Compact emergency button ---------- */
+
+#emergencyButtonCompact {
+    background-color: #B10000;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 14px;
+    font-size: 18px;
+    font-weight: 900;
+    padding: 12px 22px;
+}
+
+#emergencyButtonCompact:hover {
+    background-color: #970000;
+}
+
+#emergencyButtonCompact:pressed {
+    background-color: #7F0000;
+}
+/* =========================================================
+   FIGMA-STYLE SYMPTOM SELECTION PAGE
+   ========================================================= */
+
+#symptomPageTitle {
+    background: transparent;
+    color: #0052A3;
+    font-size: 36px;
+    font-weight: 900;
+}
+
+#symptomPageSubtitle {
+    background: transparent;
+    color: #6B6B6B;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+#symptomImageCard {
+    background-color: #FFFFFF;
+    border: 2px solid #E3D8CC;
+    border-radius: 18px;
+}
+
+#symptomImageCard:hover {
+    border: 3px solid #0052A3;
+    background-color: #F8F9FB;
+}
+
+#symptomImageCardSelected {
+    background-color: #EEF4FB;
+    border: 4px solid #0052A3;
+    border-radius: 18px;
+}
+
+#symptomImage {
+    background-color: transparent;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+}
+
+#symptomImageTitle {
+    background-color: #FFFFFF;
+    color: #2D1810;
+    font-size: 18px;
+    font-weight: 900;
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
+}
+
+#symptomBackButton {
+    background-color: #FFFFFF;
+    color: #0052A3;
+    border: 3px solid #0052A3;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 900;
+    padding: 12px 24px;
+}
+
+#symptomBackButton:hover {
+    background-color: #EEF4FB;
+}
+
+#symptomEmergencyButton {
+    background-color: #B10000;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 900;
+    padding: 12px 24px;
+}
+
+#symptomEmergencyButton:hover {
+    background-color: #970000;
+}
+
+#symptomContinueButton {
+    background-color: #0052A3;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 900;
+    padding: 12px 24px;
+}
+
+#symptomContinueButton:hover {
+    background-color: #00468C;
+}
+
+#symptomContinueButton:disabled {
+    background-color: #89A8CC;
+    color: white;
+}
+/* =========================================================
+   SYMPTOM SELECTION PAGE
+   ========================================================= */
+
+#selectionPageTitle {
+    color: #0052A3;
+    font-size: 34px;
+    font-weight: 900;
+    background: transparent;
+}
+
+#selectionPageSubtitle {
+    color: #6B6B6B;
+    font-size: 17px;
+    font-weight: 700;
+    background: transparent;
+}
+
+#selectionPageHelper {
+    color: #6B6B6B;
+    font-size: 16px;
+    font-weight: 700;
+    background: transparent;
+}
+
+/* ---------- symptom cards ---------- */
+
+#symptomCard {
+    background-color: #FFFFFF;
+    border: 2px solid #D8CDC1;
+    border-radius: 20px;
+}
+
+#symptomCard[hovered="true"] {
+    background-color: #FFFFFF;
+    border: 2px solid #C9BDAF;
+}
+
+#symptomCard[selected="true"] {
+    border: 3px solid #0052A3;
+}
+
+#symptomCardImage {
+    background-color: #F2E4D6;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+#symptomCardTitle {
+    background-color: #FFFFFF;
+    color: #2D1810;
+    font-size: 17px;
+    font-weight: 900;
+    padding: 8px 8px 10px 8px;
+}
+
+/* ---------- bottom buttons ---------- */
+
+#backWideButton {
+    background-color: #FFFFFF;
+    color: #0052A3;
+    border: 3px solid #0052A3;
+    border-radius: 16px;
+    font-size: 18px;
+    font-weight: 900;
+    padding: 12px 22px;
+}
+
+#backWideButton:hover {
+    background-color: #F5F9FF;
+}
+
+#backWideButton:pressed {
+    background-color: #EAF2FF;
+}
+
+#emergencyWideButton {
+    background-color: #B10000;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 16px;
+    font-size: 18px;
+    font-weight: 900;
+    padding: 12px 22px;
+}
+
+#emergencyWideButton:hover {
+    background-color: #980000;
+}
+
+#emergencyWideButton:pressed {
+    background-color: #820000;
+}
+
+#continueWideButton {
+    background-color: #0052A3;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 16px;
+    font-size: 18px;
+    font-weight: 900;
+    padding: 12px 22px;
+}
+
+#continueWideButton:hover {
+    background-color: #00458A;
+}
+
+#continueWideButton:pressed {
+    background-color: #003A74;
+}
+
+#continueWideButton:disabled {
+    background-color: #9DB5DA;
+    color: #FFFFFF;
+}
+
+
+/* =========================================================
+   V2 BACKGROUND + PAGE TRANSPARENCY
+   The pattern is painted by PatternBackgroundWidget in main_window.py.
+   Do not add a global QWidget background-color, or it will cover the image.
+   ========================================================= */
+
+QMainWindow#mainWindow {
+    background: transparent;
+}
+
+QWidget#patternBackgroundWidget,
+QStackedWidget#appStack,
+QWidget#transparentPage {
+    background: transparent;
+    border: none;
+}
+
+QWidget#emergencyPlainPage {
+    background-color: #F2E6D8;
+    border: none;
+}
+
+/* Keep cards readable above the patterned background */
+#mainSimpleCard,
+#contentCard,
+#questionCard,
+#actionCard,
+#typeInputCard,
+#inputFigmaCard,
+#resultCard,
+#infoCard,
+#severityCard,
+#languageCard,
+#symptomCard,
+#modeCard,
+#conditionCard {
+    background-color: rgba(255, 249, 241, 245);
+    border: 2px solid #D8C9BA;
+    border-radius: 24px;
+}
+
+QLabel {
+    background: transparent;
+}
+/* =========================================================
+   HOME PAGE V2 — FIGMA STYLE
+   ========================================================= */
+
+QLabel {
+    background: transparent;
+}
+
+/* Main stacked home area */
+QStackedWidget#homeStack,
+QWidget#homeLanguagePage,
+QWidget#homeModePage {
+    background: transparent;
+}
+
+/* Brand */
+#homeAppLogo {
+    background: transparent;
+    border: none;
+}
+
+#homeBrandTitle {
+    color: #8B6A3D;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 4px;
+}
+
+#homeBrandSubtitle {
+    color: #8A8178;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+#homeAccentLine {
+    background-color: #8B6A3D;
+    border-radius: 2px;
+}
+
+/* Welcome typography */
+#homeWelcomeTitle {
+    color: #2D1810;
+    font-size: 92px;
+    font-weight: 900;
+    letter-spacing: -3px;
+}
+
+#homeChooseLanguage {
+    color: #2D1810;
+    font-size: 30px;
+    font-weight: 900;
+}
+
+#homeChooseLanguageKriol {
+    color: #8B6A3D;
+    font-size: 27px;
+    font-weight: 900;
+}
+
+/* Language cards */
+#homeLanguageCard {
+    background-color: #FFFFFF;
+    border: 2px solid #E1D4C6;
+    border-radius: 18px;
+}
+
+#homeLanguageCard[hovered="true"] {
+    background-color: #FFFDFC;
+    border: 2px solid #0052A3;
+}
+
+#languageBadgeEn {
+    background-color: #EEF4FB;
+    color: #0052A3;
+    border-radius: 14px;
+    font-size: 17px;
+    font-weight: 900;
+}
+
+#languageBadgeKr {
+    background-color: #F1E7D8;
+    color: #8B6A3D;
+    border-radius: 14px;
+    font-size: 17px;
+    font-weight: 900;
+}
+
+#homeLanguageCardTitle {
+    color: #2D1810;
+    font-size: 30px;
+    font-weight: 900;
+}
+
+#homeLanguageCardSubtitle {
+    color: #6B6B6B;
+    font-size: 16px;
+    font-weight: 900;
+}
+
+#languageActionBlue {
+    color: #0052A3;
+    font-size: 16px;
+    font-weight: 900;
+}
+
+#languageActionOchre {
+    color: #8B6A3D;
+    font-size: 16px;
+    font-weight: 900;
+}
+
+/* Emergency outline button on welcome page */
+#homeEmergencyOutlineButton {
+    background-color: rgba(255, 255, 255, 160);
+    color: #B10000;
+    border: 2px solid #B10000;
+    border-radius: 18px;
+    font-size: 16px;
+    font-weight: 900;
+    padding: 12px 22px;
+}
+
+#homeEmergencyOutlineButton:hover {
+    background-color: #FFF2F2;
+}
+
+/* Mode screen */
+#backLinkButton {
+    background: transparent;
+    border: none;
+    color: #6B6B6B;
+    font-size: 18px;
+    font-weight: 900;
+    padding: 4px 0px;
+    text-align: left;
+}
+
+#backLinkButton:hover {
+    color: #2D1810;
+}
+
+#modePageTitle {
+    color: #2D1810;
+    font-size: 54px;
+    font-weight: 900;
+    letter-spacing: -1px;
+}
+
+#modePageSubtitle {
+    color: #6B6B6B;
+    font-size: 23px;
+    font-weight: 800;
+}
+
+/* Input mode cards */
+#modeCard {
+    background-color: #FFFFFF;
+    border: 2px solid #E1D4C6;
+    border-radius: 18px;
+}
+
+#modeCard[hovered="true"] {
+    background-color: #FFFDFC;
+    border: 2px solid #0052A3;
+}
+
+#modeCardTitle {
+    background: transparent;
+    color: #2D1810;
+    font-size: 27px;
+    font-weight: 900;
+}
+
+#modeCardSubtitle {
+    background: transparent;
+    color: #6B6B6B;
+    font-size: 17px;
+    font-weight: 900;
+}
+
+#modeCardArrow {
+    background: transparent;
+    color: #6B6B6B;
+    font-size: 38px;
+    font-weight: 900;
+}
+
+#speakIconBox {
+    background-color: #A8D5B8;
+    border-radius: 16px;
+}
+
+#pictureIconBox {
+    background-color: #A9C8E8;
+    border-radius: 16px;
+}
+
+#typeIconBox {
+    background-color: #F1D38F;
+    border-radius: 16px;
+}
+
+/* Mode screen emergency */
+#homeEmergencySolidButton {
+    background-color: #B10000;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 18px;
+    font-size: 19px;
+    font-weight: 900;
+    padding: 14px 24px;
+}
+
+#homeEmergencySolidButton:hover {
+    background-color: #970000;
+}
+
+#homeEmergencySolidButton:pressed {
+    background-color: #7F0000;
+}
+/* =========================================================
+   HOME PAGE FIGMA ALIGNMENT PATCH
+   Paste this at the bottom of assets/styles/main.qss
+   ========================================================= */
+
+QStackedWidget#homeStack,
+QWidget#homeLanguagePage,
+QWidget#homeModePage {
+    background: transparent;
+    border: none;
+}
+
+#homeAppLogo {
+    background: transparent;
+    border: none;
+}
+
+#homeBrandTitle {
+    color: #8B6A3D;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    background: transparent;
+}
+
+#homeBrandSubtitle {
+    color: #6F6F6F;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    background: transparent;
+}
+
+#homeAccentLine {
+    background-color: #8B6A3D;
+    border-radius: 2px;
+}
+
+#homeWelcomeTitle {
+    color: #2D1810;
+    font-size: 92px;
+    font-weight: 900;
+    letter-spacing: -3px;
+    background: transparent;
+}
+
+#homeChooseLanguage {
+    color: #2D1810;
+    font-size: 31px;
+    font-weight: 900;
+    background: transparent;
+}
+
+#homeChooseLanguageKriol {
+    color: #8B6A3D;
+    font-size: 28px;
+    font-weight: 900;
+    background: transparent;
+}
+
+#homeLanguageCard {
+    background-color: rgba(255, 255, 255, 235);
+    border: 2px solid #E1D4C6;
+    border-radius: 18px;
+}
+
+#homeLanguageCard[hovered="true"] {
+    background-color: rgba(255, 255, 255, 245);
+    border: 2px solid #0052A3;
+}
+
+#languageBadgeEn {
+    background-color: #EEF4FB;
+    color: #0052A3;
+    border-radius: 14px;
+    font-size: 17px;
+    font-weight: 900;
+}
+
+#languageBadgeKr {
+    background-color: #F1E7D8;
+    color: #8B6A3D;
+    border-radius: 14px;
+    font-size: 17px;
+    font-weight: 900;
+}
+
+#homeLanguageCardTitle {
+    color: #2D1810;
+    font-size: 31px;
+    font-weight: 900;
+    background: transparent;
+}
+
+#homeLanguageCardSubtitle {
+    color: #6B6B6B;
+    font-size: 16px;
+    font-weight: 900;
+    background: transparent;
+}
+
+#languageActionBlue {
+    color: #0052A3;
+    font-size: 16px;
+    font-weight: 900;
+    background: transparent;
+}
+
+#languageActionOchre {
+    color: #8B6A3D;
+    font-size: 16px;
+    font-weight: 900;
+    background: transparent;
+}
+
+#homeEmergencyOutlineButton {
+    background-color: rgba(255, 255, 255, 180);
+    color: #B10000;
+    border: 2px solid #B10000;
+    border-radius: 18px;
+    font-size: 17px;
+    font-weight: 900;
+    padding: 12px 22px;
+}
+
+#homeEmergencyOutlineButton:hover {
+    background-color: #FFF2F2;
+}
