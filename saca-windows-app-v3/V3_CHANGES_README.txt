@@ -1,4 +1,4 @@
-SACA Windows App - V2 Update
+SACA Windows App - V3 Update
 
 Implemented in this package:
 1. Pattern background image applied behind all normal app pages.
