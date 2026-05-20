@@ -80,7 +80,7 @@ fun LanguageSelectScreen(
                 // "SACA · TRIAGE" eyebrow label
                 Text(
                     text = "SACA · TRIAGE",
-                    style = MaterialTheme.typography.labelMedium,
+                    style = MaterialTheme.typography.labelLarge,
                     color = OchreAccent,
                     letterSpacing = 2.sp
                 )
