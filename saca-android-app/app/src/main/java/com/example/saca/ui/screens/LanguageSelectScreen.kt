@@ -28,7 +28,6 @@ fun LanguageSelectScreen(
     viewModel: TriageViewModel,
     onLanguageSelected: () -> Unit
 ) {
-    val language by viewModel.language.collectAsState()
 
     Box(modifier = Modifier.fillMaxSize()) {
 
