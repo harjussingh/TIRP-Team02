@@ -84,6 +84,15 @@ class TriageViewModel(application: Application) : AndroidViewModel(application) 
     }
 }
 
+    // Clears all triage session state — called when starting over or leaving result screen
+    fun resetSession() {
+        _inferenceResult.value    = null
+        _selectedSymptoms.value   = emptySet()
+        _speechTranscript.value   = ""
+        _typedInput.value         = ""
+        _inputMode.value          = null
+    }
+
     override fun onCleared() {
         super.onCleared()
         inferenceEngine.close()

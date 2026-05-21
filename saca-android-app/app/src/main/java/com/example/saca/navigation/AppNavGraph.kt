@@ -39,8 +39,12 @@ fun AppNavGraph(navController: NavHostController, viewModel: TriageViewModel, on
         composable(Screen.Result.route) {
             ResultScreen(
                 viewModel              = viewModel,
-                onBack                 = { navController.popBackStack() },
+                onBack                 = {
+                    viewModel.resetSession()
+                    navController.popBackStack()
+                                         },
                 onStartOver            = {
+                    viewModel.resetSession()
                     navController.navigate(Screen.LanguageSelect.route) {
                         popUpTo(Screen.LanguageSelect.route) { inclusive = true }
                     }
