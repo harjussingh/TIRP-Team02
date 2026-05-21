@@ -1,7 +1,6 @@
 package com.example.saca.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,10 +11,7 @@ import com.example.saca.ui.screens.ResultScreen
 import com.example.saca.viewmodel.TriageViewModel
 
 @Composable
-fun AppNavGraph(navController: NavHostController) {
-
-    // Single shared ViewModel across all screens
-    val viewModel: TriageViewModel = viewModel()
+fun AppNavGraph(navController: NavHostController, viewModel: TriageViewModel) {
 
     NavHost(
         navController = navController, startDestination = Screen.LanguageSelect.route
