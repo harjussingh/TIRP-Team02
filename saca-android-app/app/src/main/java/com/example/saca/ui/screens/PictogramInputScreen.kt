@@ -84,10 +84,21 @@ fun PictogramInputScreen(
                         color = TextSecondary
                     )
                 }
+                var isNarrating by remember { mutableStateOf(false) }
 
+                LaunchedEffect(Unit) {
+                    viewModel.narrationManager.onPlaybackStarted = { isNarrating = true }
+                    viewModel.narrationManager.onPlaybackStopped = { isNarrating = false }
+                }
                 // Play button circle
                 Surface(
-                    onClick = { /* TTS — later phase */ },
+                    onClick = {
+                        viewModel.narrationManager.narrate(
+                            text      = headline,
+                            language  = language,
+                            screenKey = "symptom_input"
+                        )
+                    },
                     shape = CircleShape,
                     color = Color(0xFFE8E4DF),
                     modifier = Modifier.size(44.dp)

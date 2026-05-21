@@ -1,6 +1,7 @@
 package com.example.saca.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -23,11 +24,17 @@ fun AppNavGraph(navController: NavHostController, viewModel: TriageViewModel, on
                 })
         }
         composable(Screen.InputModeSelect.route) {
+            DisposableEffect(Unit) {
+                onDispose { viewModel.narrationManager.stop() }
+            }
             InputModeSelectScreen(viewModel = viewModel, onModeSelected = {
                 navController.navigate(Screen.SymptomInput.route)
             }, onBack = { navController.popBackStack() })
         }
         composable(Screen.SymptomInput.route) {
+            DisposableEffect(Unit) {
+                onDispose { viewModel.narrationManager.stop() }
+            }
             SymptomInputScreen(
                 viewModel = viewModel,
                 onNext = {

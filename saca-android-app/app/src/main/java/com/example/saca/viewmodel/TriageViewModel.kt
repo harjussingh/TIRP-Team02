@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.example.saca.ml.TFLiteInferenceEngine
 import com.example.saca.model.*
+import com.example.saca.util.NarrationManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -39,6 +40,9 @@ class TriageViewModel(application: Application) : AndroidViewModel(application) 
     // Inference result — null until model has run
     private val _inferenceResult = MutableStateFlow<ModelInferenceResult?>(null)
     val inferenceResult: StateFlow<ModelInferenceResult?> = _inferenceResult.asStateFlow()
+    // Narration — shared across all screens
+    val narrationManager = NarrationManager(application)
+
 
     fun setLanguage(lang: Language) { _language.value = lang }
     fun setInputMode(mode: InputMode) { _inputMode.value = mode }
@@ -96,5 +100,6 @@ class TriageViewModel(application: Application) : AndroidViewModel(application) 
     override fun onCleared() {
         super.onCleared()
         inferenceEngine.close()
+        narrationManager.release()   // ← release TTS engine on ViewModel clear
     }
 }

@@ -87,9 +87,15 @@ fun InputModeSelectScreen(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
+                var isNarrating by remember { mutableStateOf(false) }
                 // ── Read-aloud pill ───────────────────────────
                 OutlinedButton(
-                    onClick = { /* TTS — wired in later phase */ },
+                    onClick = {   viewModel.narrationManager.narrate(
+                        text      = headline,           // the screen headline
+                        language  = language,
+                        screenKey = "input_mode"        // Kriol audio file key
+                    )
+                              },
                     shape = RoundedCornerShape(50),
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
                     colors = ButtonDefaults.outlinedButtonColors(
