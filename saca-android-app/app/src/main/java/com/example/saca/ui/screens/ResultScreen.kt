@@ -1,15 +1,36 @@
 package com.example.saca.ui.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,8 +42,21 @@ import com.example.saca.model.Language
 import com.example.saca.model.Severity
 import com.example.saca.ui.components.EmergencyCallDialog
 import com.example.saca.ui.components.SacaTopBar
-import com.example.saca.ui.theme.*
+import com.example.saca.ui.theme.PrimaryBlue
+import com.example.saca.ui.theme.SeverityCritical
+import com.example.saca.ui.theme.SeverityHigh
+import com.example.saca.ui.theme.SeverityLow
+import com.example.saca.ui.theme.SeverityMedium
+import com.example.saca.ui.theme.TextSecondary
+import com.example.saca.ui.theme.WarmClay
 import com.example.saca.viewmodel.TriageViewModel
+import android.content.Context
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
 
 @Composable
 fun ResultScreen(
@@ -304,6 +338,28 @@ private fun CriticalResultScreen(
     onStartOver     : () -> Unit,
     viewModel       : TriageViewModel
 ) {
+    // Vibrate when critical screen appears — alerts health worker
+    val context = LocalContext.current
+    LaunchedEffect(Unit) {
+        val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val manager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            manager.defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Three strong pulses — 200ms on, 100ms off, repeat x3
+            val pattern = longArrayOf(0, 200, 100, 200, 100, 200)
+            vibrator.vibrate(
+                VibrationEffect.createWaveform(pattern, -1)
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            vibrator.vibrate(longArrayOf(0, 200, 100, 200, 100, 200), -1)
+        }
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()
