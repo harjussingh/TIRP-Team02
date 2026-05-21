@@ -55,15 +55,34 @@ class TriageViewModel(application: Application) : AndroidViewModel(application) 
     // Called when user taps Next on any input screen
     // Runs inference and stores result for the result screen
     fun runInference() {
-        val text = when (_inputMode.value) {
-            InputMode.TYPE    -> _typedInput.value
-            InputMode.SPEAK   -> _speechTranscript.value
+        val symptoms: List<String> = when (_inputMode.value) {
+            InputMode.TYPE     -> _typedInput.value
+                .split(" ", ",", ".", "\n")
+                .map { it.trim().lowercase() }
+                .filter { it.isNotEmpty() }
+            InputMode.SPEAK    -> _speechTranscript.value
+                .split(" ", ",", ".", "\n")
+                .map { it.trim().lowercase() }
+                .filter { it.isNotEmpty() }
             InputMode.PICTURES -> _selectedSymptoms.value
-                .joinToString(" ") { it.labelEN }
+                .map { it.labelEN.lowercase() }
             null -> return
         }
-        _inferenceResult.value = inferenceEngine.runInference(text)
+
+    val result = inferenceEngine.runInference(symptoms)
+
+    // ── DEBUG: override severity here to test result screens ──────────────
+    // Change to: Severity.LOW / Severity.MEDIUM / Severity.HIGH / Severity.CRITICAL
+    // Set to null to use real ML output
+    val debugSeverity: Severity? = Severity.CRITICAL
+    // ─────────────────────────────────────────────────────────────────────
+
+    _inferenceResult.value = if (debugSeverity != null) {
+        result.copy(severity = debugSeverity)
+    } else {
+        result
     }
+}
 
     override fun onCleared() {
         super.onCleared()

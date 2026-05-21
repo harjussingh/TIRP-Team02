@@ -11,7 +11,7 @@ import com.example.saca.ui.screens.ResultScreen
 import com.example.saca.viewmodel.TriageViewModel
 
 @Composable
-fun AppNavGraph(navController: NavHostController, viewModel: TriageViewModel) {
+fun AppNavGraph(navController: NavHostController, viewModel: TriageViewModel, onEmergencyCall: () -> Unit) {
 
     NavHost(
         navController = navController, startDestination = Screen.LanguageSelect.route
@@ -38,8 +38,14 @@ fun AppNavGraph(navController: NavHostController, viewModel: TriageViewModel) {
         }
         composable(Screen.Result.route) {
             ResultScreen(
-                viewModel = viewModel,
-                onBack = { navController.popBackStack() }
+                viewModel              = viewModel,
+                onBack                 = { navController.popBackStack() },
+                onStartOver            = {
+                    navController.navigate(Screen.LanguageSelect.route) {
+                        popUpTo(Screen.LanguageSelect.route) { inclusive = true }
+                    }
+                },
+                onEmergencyCallConfirmed = onEmergencyCall
             )
         }
     }

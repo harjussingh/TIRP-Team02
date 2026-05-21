@@ -16,6 +16,7 @@ class TFLiteInferenceEngine(private val context: Context) {
     private var interpreter: InterpreterApi? = null
     private var vocab: List<String> = emptyList()
     private var isReady = false
+    private var numberOfDiseaseClasses = 0
 
     // Call once at app start — loads model + vocab into memory
     fun initialise() {
@@ -33,6 +34,18 @@ class TFLiteInferenceEngine(private val context: Context) {
             val options = InterpreterApi.Options()
                 .setRuntime(TfLiteRuntime.FROM_SYSTEM_ONLY)
             interpreter = InterpreterApi.create(loadModelFile(), options)
+
+            // Debug — check actual tensor shapes before running inference
+            val interp = interpreter!!
+            android.util.Log.d("TFLite", "Input count: ${interp.inputTensorCount}")
+            android.util.Log.d("TFLite", "Output count: ${interp.outputTensorCount}")
+            android.util.Log.d("TFLite", "Output shape: ${interp.getOutputTensor(0).shape().contentToString()}")
+
+            // Capture number of disease classes from model output shape
+            // Expected shape: [1, N] where N = number of disease classes
+            numberOfDiseaseClasses = interp.getOutputTensor(0).shape().getOrElse(1) { 0 }
+            android.util.Log.d("TFLite", "Disease classes detected: $numberOfDiseaseClasses")
+
             isReady = true
         }.addOnFailureListener { e ->
             android.util.Log.e("TFLite", "LiteRT init failed: ${e.message}")
@@ -40,8 +53,12 @@ class TFLiteInferenceEngine(private val context: Context) {
         }
     }
 
-    // Main inference call — takes symptom text, returns structured result
-    fun runInference(symptomText: String): ModelInferenceResult {
+    // Main inference call — takes symptom list, returns structured result
+    // NOTE: Changed from String to List<String> to match Python's exact-match
+    // binary vector logic. String.contains() caused false positives (e.g.
+    // "cough" matching "whooping cough"). Each symptom is now matched exactly
+    // against the vocab index — same as Python's symptom_index lookup.
+    fun runInference(symptoms: List<String>): ModelInferenceResult {
         // Return stub if model not ready yet
         if (!isReady || interpreter == null) {
             return ModelInferenceResult(
@@ -54,9 +71,8 @@ class TFLiteInferenceEngine(private val context: Context) {
 
         // Build input vector from vocab
         val inputVector = FloatArray(vocab.size) { index ->
-            if (symptomText.lowercase().contains(
-                    vocab.getOrNull(index)?.lowercase() ?: ""
-                )) 1f else 0f
+            val vocabSymptom = vocab.getOrNull(index)?.lowercase()?.trim() ?: ""
+            if (symptoms.any { vocabSymptom.contains(it.lowercase().trim()) }) 1f else 0f
         }
         val inputs = arrayOf(inputVector)
 
@@ -112,55 +128,42 @@ class TFLiteInferenceEngine(private val context: Context) {
                 outputMap[3] = Array(1) { FloatArray(1) }
             }
 
-            interpreter!!.runForMultipleInputsOutputs(inputs, outputMap)
+        // Guard — if disease class count not yet captured from model, return stub
+        if (numberOfDiseaseClasses == 0) {
+            android.util.Log.e("TFLite", "Disease class count is 0 — model may not have initialised correctly")
+            return ModelInferenceResult(
+                severity = Severity.LOW,
+                confidence = 0f,
+                needsFollowUp = false,
+                suggestedSymptoms = emptyList()
+            )
+        }
 
-            // Extract outputs into a uniform structure for mapping
-            val outputs = outputMap.keys.sorted().map { key ->
-                val obj = outputMap[key]
-                when (obj) {
-                    is Array<*> -> {
-                        val inner = obj.getOrNull(0)
-                        when (inner) {
-                            is FloatArray -> inner
-                            is IntArray -> inner.map { it.toFloat() }.toFloatArray()
-                            else -> FloatArray(0)
-                        }
-                    }
-                    else -> FloatArray(0)
-                }
-            }
+        // Single output buffer — disease probability array
+        // Shape: [1, numberOfDiseaseClasses] — matches Python ensemble output
+        // Replaced runForMultipleInputsOutputs + reflection with simple run()
+        // since the exported TFLite model has 1 input and 1 output tensor
+        val outputArray = Array(1) { FloatArray(numberOfDiseaseClasses) }
 
-            // Map outputs by length
-            val suggestionScores = outputs.firstOrNull { it.size == vocab.size }
-                ?: outputs.maxByOrNull { it.size }
+        // Run inference — simple single input/output call
+        interpreter!!.run(inputVector, outputArray)
 
-            val severityArr = outputs.firstOrNull { it.size == 3 } ?: FloatArray(3) { 0f }
+        // Extract probabilities from output buffer
+        val probabilities = outputArray[0]
 
-            val scalarOutputs = outputs.filter { it.size == 1 }
-            val confidenceVal = scalarOutputs.getOrNull(0)?.getOrNull(0) ?: 0f
-            val followUpScore = when {
-                scalarOutputs.size >= 2 -> scalarOutputs[1].getOrNull(0) ?: 0f
-                scalarOutputs.size == 1 -> scalarOutputs[0].getOrNull(0) ?: 0f
-                else -> 0f
-            }
+        // Find the disease index with the highest probability
+        val topIndex = probabilities.indices.maxByOrNull { probabilities[it] } ?: 0
+        val confidence = probabilities[topIndex]
 
-            val severityIndex = severityArr.indices.maxByOrNull { severityArr[it] } ?: 0
-            val followUpNeeded = followUpScore >= 0.5f
+        android.util.Log.d("TFLite", "Top index: $topIndex, Confidence: $confidence")
 
-            val suggestions = suggestionScores
-                ?.mapIndexed { idx, score -> idx to score }
-                ?.sortedByDescending { it.second }
-                ?.take(5)
-                ?.map { it.first }
-                ?.filter { it != 0 }
-                ?.mapNotNull { vocab.getOrNull(it) }
-                ?: emptyList()
-
+        // needsFollowUp mirrors Python's logic — if confidence < 0.5,
+        // the model is uncertain and follow-up questions are needed
         return ModelInferenceResult(
-            severity          = Severity.fromModelIndex(severityIndex),
-            confidence        = confidenceVal,
-            needsFollowUp     = followUpNeeded,
-            suggestedSymptoms = if (followUpNeeded) suggestions else emptyList()
+            severity = Severity.fromModelIndex(topIndex),
+            confidence = confidence,
+            needsFollowUp = confidence < 0.5f,
+            suggestedSymptoms = emptyList()
         )
     }
 
@@ -200,6 +203,7 @@ class TFLiteInferenceEngine(private val context: Context) {
                 else -> org.json.JSONArray()
             }
             return List(jsonArray.length()) { i -> jsonArray.optString(i) }
+                .drop(4)
         } catch (e: Exception) {
             android.util.Log.e("TFLite", "Failed to parse vocab JSON: ${e.message}")
             return emptyList()
