@@ -32,7 +32,9 @@ import com.example.saca.R
 import com.example.saca.model.Language
 import com.example.saca.ui.components.SacaTopBar
 import com.example.saca.ui.theme.PrimaryBlue
+import com.example.saca.ui.theme.SeverityHigh
 import com.example.saca.ui.theme.TextSecondary
+import com.example.saca.util.SpeechRecognitionManager
 import com.example.saca.viewmodel.TriageViewModel
 
 @Composable
@@ -43,9 +45,16 @@ fun SpeechInputScreen(
 ) {
     val context = LocalContext.current
     val language by viewModel.language.collectAsState()
-    val transcript by viewModel.speechTranscript.collectAsState()
+    val typedInput by viewModel.typedInput.collectAsState()
 
-    var isListening by remember { mutableStateOf(false) }
+    // Use the new SpeechRecognitionManager for voice capturing
+    val speechManager = remember { SpeechRecognitionManager(context) }
+    val transcript by speechManager.transcript.collectAsState()
+    val isListening by speechManager.isListening.collectAsState()
+    val audioLevel by speechManager.audioLevel.collectAsState()
+    val error by speechManager.error.collectAsState()
+    val isReady by speechManager.isReady.collectAsState()
+
     var hasPermission by remember { mutableStateOf(false) }
 
     // Bilingual copy
@@ -55,6 +64,7 @@ fun SpeechInputScreen(
     val placeholder =
         if (language == Language.ENGLISH) "Your words will show here..." else "Yu wods baimbai shomap yia..."
     val nextLabel = if (language == Language.ENGLISH) "Next" else "Nekst"
+    val tryAgainLabel = if (language == Language.ENGLISH) "Try again" else "Traem agen"
 
     // Narrate screen header when screen loads
     LaunchedEffect(Unit) {
@@ -65,61 +75,35 @@ fun SpeechInputScreen(
         )
     }
 
-    // Microphone permission launcher
-    val permissionLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { granted -> hasPermission = granted }
-
-    // SpeechRecognizer — Android built-in, works offline on most devices
-    val speechRecognizer = remember { SpeechRecognizer.createSpeechRecognizer(context) }
-
-    val recognitionListener = remember {
-        object : RecognitionListener {
-            override fun onResults(results: Bundle?) {
-                val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-                val text = matches?.firstOrNull() ?: ""
-                viewModel.setSpeechTranscript(text)
-                isListening = false
-            }
-
-            override fun onError(error: Int) {
-                isListening = false
-            }
-
-            override fun onReadyForSpeech(params: Bundle?) {}
-            override fun onBeginningOfSpeech() {}
-            override fun onRmsChanged(rmsdB: Float) {}
-            override fun onBufferReceived(buffer: ByteArray?) {}
-            override fun onEndOfSpeech() {}
-            override fun onPartialResults(partialResults: Bundle?) {
-                // Show live partial transcript as user speaks
-                val partial = partialResults
-                    ?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-                    ?.firstOrNull() ?: ""
-                if (partial.isNotEmpty()) viewModel.setSpeechTranscript(partial)
-            }
-
-            override fun onEvent(eventType: Int, params: Bundle?) {}
+    // Update ViewModel transcript when speechManager transcript changes
+    LaunchedEffect(transcript) {
+        if (transcript.isNotEmpty()) {
+            viewModel.setSpeechTranscript(transcript)
         }
-    }
-
-    DisposableEffect(Unit) {
-        speechRecognizer.setRecognitionListener(recognitionListener)
-        onDispose { speechRecognizer.destroy() }
     }
 
     fun startListening() {
-        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-            putExtra(
-                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
-            )
-            putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
-            // Language follows user's toggle — English or Kriol (en-AU closest match)
-            putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-AU")
+        speechManager.clearError()
+        speechManager.startListening(language)
+    }
+
+    fun stopListening() {
+        speechManager.stopListening()
+    }
+
+    // Microphone permission launcher
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        hasPermission = granted
+        if (granted) {
+            startListening()
         }
-        speechRecognizer.startListening(intent)
-        isListening = true
+    }
+
+    // Cleanup speech manager when screen is disposed
+    DisposableEffect(Unit) {
+        onDispose { speechManager.release() }
     }
 
     // Pulse animation on mic when listening
@@ -179,41 +163,85 @@ fun SpeechInputScreen(
 
                 Spacer(modifier = Modifier.height(48.dp))
 
-                // Large pulsing mic button — 120dp (exceeds 72dp design spec)
-                Surface(
-                    onClick = {
-                        if (!hasPermission) {
-                            permissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
-                        } else {
-                            if (isListening) {
-                                speechRecognizer.stopListening()
-                                isListening = false
-                            } else {
-                                startListening()
-                            }
-                        }
-                    },
-                    shape = CircleShape,
-                    color = PrimaryBlue,
-                    modifier = Modifier
-                        .size(120.dp)
-                        .scale(if (isListening) pulseScale else 1f)
+                // Large pulsing mic button — 120dp with audio level visualization
+                Box(
+                    modifier = Modifier.size(140.dp),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Box(contentAlignment = Alignment.Center) {
-                        Text("🎤", fontSize = 40.sp)
+                    // Audio level circle (animated background)
+                    if (isListening) {
+                        Surface(
+                            shape = CircleShape,
+                            color = SeverityHigh.copy(alpha = audioLevel * 0.3f),
+                            modifier = Modifier
+                                .size((120 + audioLevel * 20).dp)
+                        ) {}
+                    }
+
+                    Surface(
+                        onClick = {
+                            if (isListening) {
+                                stopListening()
+                            } else {
+                                if (!hasPermission) {
+                                    permissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+                                } else {
+                                    startListening()
+                                }
+                            }
+                        },
+                        shape = CircleShape,
+                        color = PrimaryBlue,
+                        modifier = Modifier
+                            .size(120.dp)
+                            .scale(if (isListening) pulseScale else 1f)
+                    ) {
+                        Box(contentAlignment = Alignment.Center) {
+                            Text("🎤", fontSize = 40.sp)
+                        }
                     }
                 }
 
                 Spacer(modifier = Modifier.height(20.dp))
 
                 Text(
-                    text = tapMicLabel,
+                    text = if (isListening) "Listening..." else tapMicLabel,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFF1A1A1A)
+                    color = if (isListening) SeverityHigh else Color(0xFF1A1A1A)
                 )
 
                 Spacer(modifier = Modifier.height(28.dp))
+
+                // Error display (if any)
+                if (error != null) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(
+                                color = SeverityHigh.copy(alpha = 0.15f),
+                                shape = RoundedCornerShape(12.dp)
+                            )
+                            .padding(12.dp)
+                    ) {
+                        Column {
+                            Text(
+                                text = "⚠ ${error ?: ""}",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = SeverityHigh,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = tryAgainLabel,
+                                style = MaterialTheme.typography.labelMedium,
+                                color = SeverityHigh.copy(alpha = 0.7f)
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
 
                 // Live transcript area — dashed border
                 Box(
@@ -236,13 +264,16 @@ fun SpeechInputScreen(
                 }
             }
 
-            // Next — disabled until transcript has content
+            // Next — disabled until transcript has content and ready state
             Box(modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)) {
                 Button(
-                    onClick = onNext,
-                    enabled = transcript.isNotBlank(),
+                    onClick = {
+                        speechManager.stopListening()
+                        onNext()
+                    },
+                    enabled = transcript.isNotBlank() && isReady,
                     shape = RoundedCornerShape(14.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = PrimaryBlue,
