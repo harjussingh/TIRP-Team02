@@ -56,6 +56,15 @@ fun SpeechInputScreen(
         if (language == Language.ENGLISH) "Your words will show here..." else "Yu wods baimbai shomap yia..."
     val nextLabel = if (language == Language.ENGLISH) "Next" else "Nekst"
 
+    // Narrate screen header when screen loads
+    LaunchedEffect(Unit) {
+        viewModel.narrationManager.narrate(
+            text = headline,
+            language = language,
+            screenKey = "speech_input"
+        )
+    }
+
     // Microphone permission launcher
     val permissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()

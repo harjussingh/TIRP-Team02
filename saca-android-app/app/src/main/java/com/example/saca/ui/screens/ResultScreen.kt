@@ -138,6 +138,16 @@ fun ResultScreen(
 
     // Emergency dialog state
     var showEmergencyDialog by remember { mutableStateOf(false) }
+    
+    // Narrate result headline when screen loads
+    LaunchedEffect(severity) {
+        viewModel.narrationManager.narrate(
+            text = headline,
+            language = language,
+            screenKey = "result"
+        )
+    }
+    
     if (showEmergencyDialog) {
         EmergencyCallDialog(
             language  = language,

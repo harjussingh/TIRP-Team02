@@ -42,6 +42,15 @@ fun PictogramInputScreen(
         if (language == Language.ENGLISH) "Tap one or more pictures" else "Tajim wan o mo piksa"
     val nextLabel = if (language == Language.ENGLISH) "Next" else "Nekst"
 
+    // Narrate screen header when screen loads
+    LaunchedEffect(Unit) {
+        viewModel.narrationManager.narrate(
+            text = headline,
+            language = language,
+            screenKey = "pictogram_input"
+        )
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
 
         // Background

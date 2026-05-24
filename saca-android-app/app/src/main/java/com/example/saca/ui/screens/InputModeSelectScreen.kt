@@ -42,6 +42,15 @@ fun InputModeSelectScreen(
         Language.KRIOL   -> "Tajim fo irrim"
     }
 
+    // Narrate screen header when screen loads
+    LaunchedEffect(Unit) {
+        viewModel.narrationManager.narrate(
+            text = headline,
+            language = language,
+            screenKey = "input_mode"
+        )
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
 
         // --- Background PNG (same asset, lighter overlay) ---
