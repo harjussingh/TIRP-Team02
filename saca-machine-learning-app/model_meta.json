@@ -15,5 +15,5 @@
     234
   ],
   "vocab_first_token": "None",
-  "note": "Show suggested_symptoms only when needs_follow_up >= 0.5"
+  "note": "Show suggested_symptoms only when needs_follow_up >= 0.7"
 }
