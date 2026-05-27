@@ -1,0 +1,63 @@
+{
+  "home_title": "Tell us how you feel",
+  "home_subtitle": "Choose one",
+  "speak": "🎤 Speak",
+  "type": "⌨️ Type",
+  "pictures": "🖼️ Pictures",
+  "emergency": "🚨 Emergency Help",
+
+  "speak_now": "Speak now",
+  "press_microphone": "Press the microphone",
+  "start_speaking": "🎤 Start speaking",
+  "voice_placeholder": "Your voice will appear here",
+
+  "type_here": "Type here",
+  "type_subtitle": "Write your symptoms",
+  "type_placeholder": "Type symptoms here",
+
+  "few_questions": "A few more questions",
+  "safety_check": "Safety check",
+  "how_bad": "How bad is your problem?",
+
+  "back": "Back",
+  "next": "Next",
+  "continue": "Continue",
+  "see_results": "See Results",
+  "result": "Result",
+  "home": "Home",
+
+  "home_footer": "Simple health support prototype for Ngukurr community",
+  "quick_symptoms": "Quick symptoms",
+
+  "voice_status_ready": "Press the microphone and speak clearly",
+  "type_status_ready": "You can type or tap the quick symptoms",
+  "listening": "Listening...",
+  "recording_done": "Recording complete",
+  "voice_error": "Could not understand speech",
+
+  "pictures_title": "Choose pictures that match your symptoms",
+  "pictures_subtitle": "You can choose more than one",
+
+  "start_new_assessment": "Start New Assessment",
+  "related_conditions": "Related conditions",
+
+  "symptom_headache": "Headache",
+  "symptom_fever": "Fever",
+  "symptom_cough": "Cough",
+  "symptom_stomach_pain": "Stomach pain",
+  "symptom_sore_throat": "Sore throat",
+  "symptom_body_pain": "Body pain",
+  "symptom_tired": "Tired",
+  "symptom_dizzy": "Dizzy",
+  "symptom_chest_pain": "Chest pain",
+  "symptom_skin_problem": "Skin problem",
+
+  "you_said_label": "You said",
+  "english_meaning_label": "English meaning",
+  "symptoms_found_label": "Symptoms found",
+  "pain_level_label": "Pain level",
+  "triage_level_label": "Triage level",
+
+  "emergency_warning_list": "Trouble breathing?\nChest pain?\nHeavy bleeding?\nPassed out?",
+"emergency_instruction": "Get emergency help now or go to the nearest clinic."
+}
