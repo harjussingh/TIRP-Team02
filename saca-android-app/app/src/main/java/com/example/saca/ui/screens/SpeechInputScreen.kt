@@ -1,11 +1,7 @@
 package com.example.saca.ui.screens
 
 import android.Manifest
-import android.content.Intent
-import android.os.Bundle
-import android.speech.RecognitionListener
-import android.speech.RecognizerIntent
-import android.speech.SpeechRecognizer
+import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.*
@@ -25,9 +21,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import com.example.saca.R
 import com.example.saca.model.Language
 import com.example.saca.ui.components.SacaTopBar
@@ -45,9 +41,8 @@ fun SpeechInputScreen(
 ) {
     val context = LocalContext.current
     val language by viewModel.language.collectAsState()
-    val typedInput by viewModel.typedInput.collectAsState()
 
-    // Use the new SpeechRecognitionManager for voice capturing
+    // Use the SpeechRecognitionManager for voice capturing
     val speechManager = remember { SpeechRecognitionManager(context) }
     val transcript by speechManager.transcript.collectAsState()
     val isListening by speechManager.isListening.collectAsState()
@@ -55,7 +50,15 @@ fun SpeechInputScreen(
     val error by speechManager.error.collectAsState()
     val isReady by speechManager.isReady.collectAsState()
 
-    var hasPermission by remember { mutableStateOf(false) }
+    // Check initial permission state
+    var hasPermission by remember {
+        mutableStateOf(
+            ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.RECORD_AUDIO
+            ) == PackageManager.PERMISSION_GRANTED
+        )
+    }
 
     // Bilingual copy
     val headline = if (language == Language.ENGLISH) "What's wrong?" else "Wanem ron?"
@@ -82,23 +85,29 @@ fun SpeechInputScreen(
         }
     }
 
-    fun startListening() {
-        speechManager.clearError()
-        speechManager.startListening(language)
-    }
-
-    fun stopListening() {
-        speechManager.stopListening()
-    }
-
     // Microphone permission launcher
     val permissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
         hasPermission = granted
         if (granted) {
-            startListening()
+            // Automatically start listening once permission is granted
+            speechManager.clearError()
+            speechManager.startListening(language)
         }
+    }
+
+    fun startListening() {
+        if (!hasPermission) {
+            permissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+        } else {
+            speechManager.clearError()
+            speechManager.startListening(language)
+        }
+    }
+
+    fun stopListening() {
+        speechManager.stopListening()
     }
 
     // Cleanup speech manager when screen is disposed
@@ -118,7 +127,6 @@ fun SpeechInputScreen(
     )
 
     Box(modifier = Modifier.fillMaxSize()) {
-
         Image(
             painter = painterResource(id = R.drawable.saca_background),
             contentDescription = null,
@@ -130,7 +138,6 @@ fun SpeechInputScreen(
             .background(Color(0xE6F5F0EB)))
 
         Column(modifier = Modifier.fillMaxSize()) {
-
             SacaTopBar(
                 currentLanguage = language,
                 onLanguageToggle = { viewModel.setLanguage(it) },
@@ -144,10 +151,8 @@ fun SpeechInputScreen(
                     .padding(horizontal = 28.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Headline left-aligned
                 Column(modifier = Modifier.fillMaxWidth()) {
                     Text(
                         text = headline,
@@ -163,32 +168,21 @@ fun SpeechInputScreen(
 
                 Spacer(modifier = Modifier.height(48.dp))
 
-                // Large pulsing mic button — 120dp with audio level visualization
                 Box(
                     modifier = Modifier.size(140.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    // Audio level circle (animated background)
                     if (isListening) {
                         Surface(
                             shape = CircleShape,
                             color = SeverityHigh.copy(alpha = audioLevel * 0.3f),
-                            modifier = Modifier
-                                .size((120 + audioLevel * 20).dp)
+                            modifier = Modifier.size((120 + audioLevel * 20).dp)
                         ) {}
                     }
 
                     Surface(
                         onClick = {
-                            if (isListening) {
-                                stopListening()
-                            } else {
-                                if (!hasPermission) {
-                                    permissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
-                                } else {
-                                    startListening()
-                                }
-                            }
+                            if (isListening) stopListening() else startListening()
                         },
                         shape = CircleShape,
                         color = PrimaryBlue,
@@ -213,7 +207,6 @@ fun SpeechInputScreen(
 
                 Spacer(modifier = Modifier.height(28.dp))
 
-                // Error display (if any)
                 if (error != null) {
                     Box(
                         modifier = Modifier
@@ -239,11 +232,9 @@ fun SpeechInputScreen(
                             )
                         }
                     }
-
                     Spacer(modifier = Modifier.height(16.dp))
                 }
 
-                // Live transcript area — dashed border
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -264,10 +255,7 @@ fun SpeechInputScreen(
                 }
             }
 
-            // Next — disabled until transcript has content and ready state
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)) {
+            Box(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
                 Button(
                     onClick = {
                         speechManager.stopListening()
@@ -279,9 +267,7 @@ fun SpeechInputScreen(
                         containerColor = PrimaryBlue,
                         disabledContainerColor = Color(0xFFD6CFC8)
                     ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(60.dp)
+                    modifier = Modifier.fillMaxWidth().height(60.dp)
                 ) {
                     Text(
                         text = "→  $nextLabel",
