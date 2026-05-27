@@ -34,7 +34,7 @@ class NlpRepository(private val context: Context) {
     // ── SERVER CONFIG ─────────────────────────────────────────────────────
     // TODO: Replace with real URL when  deploys the FastAPI server
 
-    private val NLP_SERVER_URL  = "http://YOUR_SERVER_IP:8000"
+    private val NLP_SERVER_URL  = "http://192.168.0.231:8000/"
     private val ENDPOINT        = "$NLP_SERVER_URL/nlp/process"
     private val HEALTH_ENDPOINT = "$NLP_SERVER_URL/health"
     private val TIMEOUT_MS      = 5_000L   // 5 seconds before falling back
