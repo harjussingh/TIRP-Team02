@@ -47,7 +47,10 @@ fun InputModeSelectScreen(
         viewModel.narrationManager.narrate(
             text = headline,
             language = language,
-            screenKey = "input_mode"
+            screenKey = when (language) {
+                Language.KRIOL   -> "input_mode"   // no file yet → silent skip
+                Language.ENGLISH -> "input_mode"
+            }
         )
     }
 

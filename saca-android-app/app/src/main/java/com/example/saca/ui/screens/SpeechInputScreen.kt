@@ -74,7 +74,7 @@ fun SpeechInputScreen(
         viewModel.narrationManager.narrate(
             text = headline,
             language = language,
-            screenKey = "speech_input"
+            screenKey = "speak"
         )
     }
 

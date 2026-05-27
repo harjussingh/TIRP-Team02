@@ -57,7 +57,7 @@ fun TextInputScreen(
         viewModel.narrationManager.narrate(
             text = headline,
             language = language,
-            screenKey = "text_input"
+            screenKey = "typing"
         )
     }
 
