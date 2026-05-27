@@ -6,5 +6,6 @@ sealed class Screen(val route: String) {
     object InputModeSelect : Screen("input_mode_select")
     object SymptomInput : Screen("symptom_input")
     object FollowUp : Screen("follow_up")
+    object Loading         : Screen("loading")
     object Result : Screen("result")
 }

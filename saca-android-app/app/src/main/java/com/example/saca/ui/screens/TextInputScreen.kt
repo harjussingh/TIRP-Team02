@@ -20,6 +20,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -50,6 +51,15 @@ fun TextInputScreen(
     val voiceButtonLabel =
         if (language == Language.ENGLISH) "Use voice instead" else "Yus vois instedi"
     val nextLabel = if (language == Language.ENGLISH) "Next" else "Nekst"
+
+    // Narrate screen header when screen loads
+    LaunchedEffect(Unit) {
+        viewModel.narrationManager.narrate(
+            text = headline,
+            language = language,
+            screenKey = "text_input"
+        )
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
 
