@@ -16,9 +16,9 @@ fun SymptomInputScreen(
 
     // Route to correct modality based on what user chose on Screen 02
     when (inputMode) {
-        InputMode.PICTURES -> PictogramInputScreen(viewModel, onNext, onBack)
+        InputMode.PICTURES -> BodyMapInputScreen(viewModel, onNext, onBack)
         InputMode.SPEAK -> SpeechInputScreen(viewModel, onNext, onBack)
         InputMode.TYPE -> TextInputScreen(viewModel, onNext, onBack)
-        null -> PictogramInputScreen(viewModel, onNext, onBack) // safe default
+        null -> BodyMapInputScreen(viewModel, onNext, onBack) // safe default
     }
 }

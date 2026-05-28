@@ -88,6 +88,9 @@ class TriageViewModel(application: Application) : AndroidViewModel(application) 
     private val _followUpAnswers = MutableStateFlow<Map<String, String>>(emptyMap())
     val followUpAnswers: StateFlow<Map<String, String>> = _followUpAnswers.asStateFlow()
 
+    private val _bodyMapVocabKeys = MutableStateFlow<List<String>>(emptyList())
+   val bodyMapVocabKeys: StateFlow<List<String>> = _bodyMapVocabKeys.asStateFlow()
+
     init {
         inferenceEngine.initialise()
         nlpRepository.initialise()
@@ -99,6 +102,9 @@ class TriageViewModel(application: Application) : AndroidViewModel(application) 
     fun setSpeechTranscript(text: String) { _speechTranscript.value = text }
     fun setTypedInput(text: String)       { _typedInput.value = text }
     fun switchToSpeech()                  { _inputMode.value = InputMode.SPEAK }
+    fun setSelectedSymptomsFromBodyMap(vocabKeys: List<String>) {
+       _bodyMapVocabKeys.value = vocabKeys
+   }
 
     fun toggleSymptom(symptom: Symptom) {
         _selectedSymptoms.value = _selectedSymptoms.value.toMutableSet().apply {
@@ -147,9 +153,9 @@ class TriageViewModel(application: Application) : AndroidViewModel(application) 
             val rawText = when (_inputMode.value) {
                 InputMode.TYPE     -> _typedInput.value.takeIf { it.isNotBlank() } ?: ""
                 InputMode.SPEAK    -> _speechTranscript.value.takeIf { it.isNotBlank() } ?: ""
-                InputMode.PICTURES -> _selectedSymptoms.value
-                    .mapNotNull { it.id.takeIf { id -> id.isNotBlank() } }
-                    .joinToString(" ")
+                InputMode.PICTURES -> {
+                    _bodyMapVocabKeys.value.joinToString(" ")
+                }
                 null -> {
                     _isLoading.value = false
                     return@launch
